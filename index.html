@@ -3,33 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anita's Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Anita Hong – Projects</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff9f8;
+      color: #2b2b2b;
+      overflow-x: hidden;
+    }
+    header {
+      background: #44bba4;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .typewriter {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #fefefe;
+      margin-top: 0.5rem;
+      height: 1.5rem;
+    }
+    main {
+      padding: 2rem 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: #5aa9e6;
+    }
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #ffffff;
+      border: 2px dashed #d3cdd1;
+      border-radius: 12px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card:hover {
+      background-color: #fbfbff;
+      border-color: #44bba4;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #fefefe;
+      font-size: 0.9rem;
+      color: #888;
+      position: relative;
+    }
+    .flowers {
+      position: absolute;
+      width: 100%;
+      top: -40px;
+      left: 0;
+      pointer-events: none;
+      font-size: 1.2rem;
+    }
+    .flowers span {
+      display: inline-block;
+      animation: float 6s infinite ease-in-out;
+    }
+    .flowers span:nth-child(odd) {
+      animation-delay: 3s;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); opacity: 1; }
+      50% { transform: translateY(-10px); opacity: 0.6; }
+      100% { transform: translateY(0px); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Hi, I’m Anita.</h1>
-    <p>I’m a CS grad rebuilding my coding confidence one project at a time.</p>
+    <h1>Hi, I'm Anita 🌷</h1>
+    <div class="typewriter" id="typewriter"></div>
   </header>
 
   <main>
-    <section>
-      <h2>About Me</h2>
-      <p>I avoided coding for a long time. Now I’m learning at my own pace and sharing what I make.</p>
-    </section>
+    <h2>About Me</h2>
+    <p>I avoided coding for a long time. Now I’m rebuilding my confidence through playful projects and soft tech.</p>
 
-    <section>
-      <h2>Projects</h2>
-      <ul>
-        <li>What Do You Want to Eat? – Coming soon</li>
-        <li>Loyalty Stamp App – Coming soon</li>
-        <li>Hey Kiddo – Coming soon</li>
-      </ul>
-    </section>
+    <h2>Projects</h2>
+    <div class="projects">
+      <a class="card" href="https://hey-kiddo-lite.vercel.app/" target="_blank">💌 <strong>Hey Kiddo (Lite)</strong> – Text a comforting voice like mom, dad, or your fairy godmother.</a>
+      <a class="card">🍽️ <strong>What Do You Want to Eat?</strong> – A decision helper for the chronically indecisive. (Coming soon)</a>
+      <a class="card">🎟️ <strong>Loyalty Stamp App</strong> – A digital punch card for small businesses. (Coming soon)</a>
+    </div>
   </main>
 
   <footer>
-    <p>💻 Built with patience, imperfection, and quiet courage.</p>
+    <div class="flowers">🌼 🌸 🌿 🌼 🌸 🌼 🌷 🌼 🌼 🌿 🌼 🌸</div>
+    Built with patience, imperfection, and quiet courage.
   </footer>
+
+  <script>
+    const phrases = [
+      "I'm rebuilding my coding confidence 🌱",
+      "I make soft tech for real people 💻",
+      "mom, dad, fairy godmother... 💬"
+    ];
+    let i = 0, j = 0, currentPhrase = [], isDeleting = false;
+    const el = document.getElementById("typewriter");
+
+    function loop() {
+      el.innerHTML = currentPhrase.join("");
+      if (!isDeleting && j <= phrases[i].length) {
+        currentPhrase.push(phrases[i][j]);
+        j++;
+      }
+      if (isDeleting && j <= phrases[i].length) {
+        currentPhrase.pop();
+        j--;
+      }
+      if (j === phrases[i].length) isDeleting = true;
+      if (isDeleting && j === 0) {
+        currentPhrase = [];
+        isDeleting = false;
+        i = (i + 1) % phrases.length;
+      }
+      setTimeout(loop, isDeleting ? 50 : 120);
+    }
+    loop();
+  </script>
 </body>
 </html>
