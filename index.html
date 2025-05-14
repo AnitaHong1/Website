@@ -17,18 +17,19 @@
       color: white;
       padding: 2rem 1rem;
       text-align: center;
-      position: relative;
     }
     header h1 {
       margin: 0;
       font-size: 2.5rem;
     }
-    .typewriter {
+    .subtitle {
       font-size: 1.1rem;
       font-weight: 300;
       color: #fefefe;
       margin-top: 0.5rem;
-      height: 1.5rem;
+      min-height: 1.5rem;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
     }
     main {
       padding: 2rem 1rem;
@@ -59,18 +60,14 @@
     }
     footer {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem 2rem;
       background: #fefefe;
       font-size: 0.9rem;
       color: #888;
       position: relative;
     }
     .flowers {
-      position: absolute;
-      width: 100%;
-      top: -40px;
-      left: 0;
-      pointer-events: none;
+      margin-top: 2rem;
       font-size: 1.2rem;
     }
     .flowers span {
@@ -90,12 +87,12 @@
 <body>
   <header>
     <h1>Hi, I'm Anita 🌷</h1>
-    <div class="typewriter" id="typewriter"></div>
+    <div class="subtitle" id="subtitle"></div>
   </header>
 
   <main>
     <h2>About Me</h2>
-    <p>I avoided coding for a long time. Now I’m rebuilding my confidence through playful projects and soft tech.</p>
+    <p>I avoided coding for a long time. Now I’m rebuilding my confidence through playful projects and kind interfaces.</p>
 
     <h2>Projects</h2>
     <div class="projects">
@@ -111,33 +108,42 @@
   </footer>
 
   <script>
+    const subtitle = document.getElementById("subtitle");
     const phrases = [
-      "I'm rebuilding my coding confidence 🌱",
-      "I make soft tech for real people 💻",
-      "mom, dad, fairy godmother... 💬"
+      "you’re doing better than you think",
+      "make something small & sweet",
+      "progress, not perfection"
     ];
-    let i = 0, j = 0, currentPhrase = [], isDeleting = false;
-    const el = document.getElementById("typewriter");
 
-    function loop() {
-      el.innerHTML = currentPhrase.join("");
-      if (!isDeleting && j <= phrases[i].length) {
-        currentPhrase.push(phrases[i][j]);
-        j++;
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+      const currentPhrase = phrases[phraseIndex];
+      if (!isDeleting) {
+        subtitle.textContent = currentPhrase.slice(0, ++charIndex);
+        if (charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(typeEffect, 2400); // pause after typing
+          return;
+        }
+      } else {
+        subtitle.style.opacity = 0;
+        setTimeout(() => {
+          subtitle.textContent = "";
+          subtitle.style.opacity = 1;
+          isDeleting = false;
+          charIndex = 0;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeEffect, 300);
+        }, 600);
+        return;
       }
-      if (isDeleting && j <= phrases[i].length) {
-        currentPhrase.pop();
-        j--;
-      }
-      if (j === phrases[i].length) isDeleting = true;
-      if (isDeleting && j === 0) {
-        currentPhrase = [];
-        isDeleting = false;
-        i = (i + 1) % phrases.length;
-      }
-      setTimeout(loop, isDeleting ? 50 : 120);
+      setTimeout(typeEffect, 90);
     }
-    loop();
+
+    typeEffect();
   </script>
 </body>
 </html>
